@@ -1,25 +1,24 @@
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers("/login", "/oauth2/**").permitAll() // Allow login and OAuth2 routes to be public
-                .anyRequest().authenticated() // Secure other routes
-                .and()
-                .oauth2Login()
-                .loginPage("/login") // Custom login page (optional)
-                .defaultSuccessUrl("/home", true) // Redirect on success
-                .failureUrl("/login?error=true"); // Handle login failure
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login", "/oauth2/**").permitAll() // Allow public access to login and OAuth2 routes
+                        .anyRequest().authenticated() // Secure all other routes
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login") // Custom login page (optional)
+                        .defaultSuccessUrl("/home", true) // Redirect on success
+                        .failureUrl("/login?error=true") // Redirect on failure
+                );
+
+        return http.build();
     }
 }
