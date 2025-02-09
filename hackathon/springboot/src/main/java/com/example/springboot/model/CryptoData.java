@@ -1,56 +1,51 @@
 package com.example.springboot.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "crypto_data")
 public class CryptoData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;  // Maps to 'id'
+    private Long id;
 
-    private String symbol;  // Maps to 'symbol'
+    @Column(nullable = false)
+    private String symbol;
 
-    private BigDecimal price;  // Maps to 'price'
+    @Column(precision = 19, scale = 10, nullable = false)
+    private BigDecimal price;
 
-    private LocalDateTime date;  // Maps to 'date'
+    @Column(nullable = false)
+    private LocalDateTime date;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public CryptoData() {}
 
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public void setSymbol(String symbol) {
+    public CryptoData(String symbol, BigDecimal price) {
         this.symbol = symbol;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
         this.price = price;
+        this.date = LocalDateTime.now();
     }
 
-    public LocalDateTime getDate() {
-        return date;
+
+    @PrePersist
+    protected void onCreate() {
+        this.date = LocalDateTime.now();
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getSymbol() { return symbol; }
+    public void setSymbol(String symbol) { this.symbol = symbol; }
+
+    public BigDecimal getPrice() { return price; }
+    public void setPrice(BigDecimal price) { this.price = price; }
+
+    public LocalDateTime getDate() { return date; }
+    public void setDate(LocalDateTime date) { this.date = date; }
 }
-
