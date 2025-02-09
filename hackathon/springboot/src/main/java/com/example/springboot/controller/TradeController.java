@@ -1,8 +1,11 @@
 package com.example.springboot.controller;
 
 import com.example.springboot.model.Trade;
+import com.example.springboot.model.UserLeaderboard;
 import com.example.springboot.repo.TradeRepository;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/trades")

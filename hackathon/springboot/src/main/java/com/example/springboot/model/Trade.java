@@ -1,75 +1,49 @@
 package com.example.springboot.model;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "trades")
 public class Trade {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;  // Maps to 'id'
+    private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;  // Foreign key reference to 'users' table
+    @JoinColumn(name = "user_id", nullable = false) // This connects to the User entity
+    private User user;
 
-    private String tradeType;  // Maps to 'trade_type'
+    @Column(nullable = false)
+    private String tradeType;
 
-    private BigDecimal amount;  // Maps to 'amount'
+    @Column(nullable = false)
+    private BigDecimal amount;
 
-    private BigDecimal price;  // Maps to 'price'
+    @Column(nullable = false)
+    private BigDecimal price;
 
-    private LocalDateTime tradeDate;  // Maps to 'trade_date'
+    @Column(nullable = false)
+    private LocalDateTime tradeDate;
 
-    public Long getId() {
-        return id;
-    }
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
 
-    public User getUser() {
-        return user;
-    }
+    public String getTradeType() { return tradeType; }
+    public void setTradeType(String tradeType) { this.tradeType = tradeType; }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    public BigDecimal getAmount() { return amount; }
+    public void setAmount(BigDecimal amount) { this.amount = amount; }
 
-    public String getTradeType() {
-        return tradeType;
-    }
+    public BigDecimal getPrice() { return price; }
+    public void setPrice(BigDecimal price) { this.price = price; }
 
-    public void setTradeType(String tradeType) {
-        this.tradeType = tradeType;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public LocalDateTime getTradeDate() {
-        return tradeDate;
-    }
-
-    public void setTradeDate(LocalDateTime tradeDate) {
-        this.tradeDate = tradeDate;
-    }
+    public LocalDateTime getTradeDate() { return tradeDate; }
+    public void setTradeDate(LocalDateTime tradeDate) { this.tradeDate = tradeDate; }
 }
-

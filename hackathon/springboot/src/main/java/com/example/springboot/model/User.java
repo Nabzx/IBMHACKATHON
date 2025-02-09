@@ -2,27 +2,30 @@ package com.example.springboot.model;
 
 import jakarta.persistence.*;
 
-
+import java.util.List;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;  // This will map to the 'id' column in the 'users' table
+    private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String username;  // Maps to 'username'
+    @Column(nullable = false, unique = true)
+    private String username;
 
-    @Column(unique = true, nullable = false)
-    private String email;  // Maps to 'email'
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(nullable = false)
-    private String password;  // Maps to 'password'
+    private String password;
 
-    private String fullName;  // Maps to 'full_name'
+    private String fullName;
+    private String profilePicture;
 
-    private String profilePicture;  // Maps to 'profile_picture'
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Trade> trades;
 
     public Long getId() {
         return id;
