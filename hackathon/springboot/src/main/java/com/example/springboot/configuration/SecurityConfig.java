@@ -12,14 +12,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/oauth2/**").permitAll() // Allow public access to login and OAuth2 routes
-                        .anyRequest().authenticated() // Secure all other routes
+                        .anyRequest().permitAll() // 🚨 TEMPORARILY ALLOW EVERYTHING
                 )
-                .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login") // Custom login page (optional)
-                        .defaultSuccessUrl("/home", true) // Redirect on success
-                        .failureUrl("/login?error=true") // Redirect on failure
-                );
+                .csrf(csrf -> csrf.disable()); // Disable CSRF only for testing
 
         return http.build();
     }

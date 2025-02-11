@@ -2,6 +2,7 @@ package com.example.springboot.model;
 
 import jakarta.persistence.*;
 
+import java.security.AuthProvider;
 import java.util.List;
 
 @Entity
@@ -23,6 +24,9 @@ public class User {
 
     private String fullName;
     private String profilePicture;
+
+    @Enumerated(EnumType.STRING)
+    private AuthProvider authProvider;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Trade> trades;
@@ -73,6 +77,31 @@ public class User {
 
     public void setProfilePicture(String profilePicture) {
         this.profilePicture = profilePicture;
+    }
+
+    public boolean isPresent() {
+        return id != null;
+    }
+
+    public enum AuthProvider {
+        LOCAL,
+        GOOGLE
+    }
+
+    public AuthProvider getAuthProvider() {
+        return authProvider;
+    }
+
+    public void setAuthProvider(AuthProvider authProvider) {
+        this.authProvider = authProvider;
+    }
+
+    public List<Trade> getTrades() {
+        return trades;
+    }
+
+    public void setTrades(List<Trade> trades) {
+        this.trades = trades;
     }
 }
 

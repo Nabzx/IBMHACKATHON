@@ -2,12 +2,13 @@ package com.example.springboot.controller;
 
 import com.example.springboot.model.CryptoData;
 import com.example.springboot.service.CryptoService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/crypto")
 public class CryptoController {
 
